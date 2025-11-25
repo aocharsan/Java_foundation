@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 public class NewFileHandling {
     /*
-       Why nio file handling added to replace io file handling?
+        Why does nio file handling add to replace io file handling?
         Blocking I/O — Threads had to wait until data was read/written completely.
         Inefficient for large files or multiple connections — not suitable for scalable servers.
         Limited file metadata access — File class could not easily read permissions, ownership, timestamps, etc.
@@ -111,18 +111,18 @@ public class NewFileHandling {
             readDataFromFile.forEach(System.out::println);
 
             System.out.println("-----------------------------------------------------");
-            // reading file as a String
+            // reading a file as a String
             String readAsString=Files.readString(filePath);
             System.out.println(readAsString);
 
-            // Read file using Stream API as Stream<String>
+            // Read a file using Stream API as Stream<String>
             try(Stream<String> stream=Files.lines(filePath)){
                   stream.filter(word->word.startsWith("c"))
                         .collect(Collectors.toCollection(LinkedHashSet::new));
             }
 
             System.out.println("reading file as a byte.............");
-            // reading file as a byte.
+            // reading a file as a byte.
              byte[] readAsBytes=Files.readAllBytes(filePath);
             for (byte byteRead : readAsBytes) {
                 System.out.print(byteRead+" ");
@@ -131,7 +131,7 @@ public class NewFileHandling {
           //3️⃣ Writing to a File
             // write as a binary inside file using ---> Files.write(path, byte[], StandardOpenOption...)
             // writing string content, but it will override original content
-            // for append after original content, use Enum ---> StandardOpenOption.APPEND and explore as per need.
+            // for appending after original content, use Enum ---> StandardOpenOption.APPEND and explore as per need.
             String content="""
                     Please, follow instructions given by our customer executive to pay all your due EMIs on time.
                      If you have any doubt don't hesitate to call us any moment.
@@ -150,14 +150,14 @@ public class NewFileHandling {
          //4️⃣ File Copy, Move, Delete
             Path copiedPath=Paths.get("D:\\text_copy_"+LocalDate.now()+".txt");
 
-            // deleting file from given path if not there throws exception.
+            // deleting file from a given path if not there throws exception.
             if(Files.exists(copiedPath)){
                 Files.delete(copiedPath);
                 System.out.println("file deleted successfully...........");
             }
 
 
-            // copying file to another location also same way you can move it to desired path location.
+            // copying a file to another location also same way you can move it to desired path location.
             if(Files.notExists(copiedPath)){
                 Files.copy(filePath,copiedPath);
                 System.out.println("files copied again because file not be there inside copied path location");
@@ -235,7 +235,7 @@ public class NewFileHandling {
                                                   System.out.println("Deleted old files: "+path1);
                                               }
 
-                                          } catch (IOException _) {
+                                          } catch (IOException ex) {
                                               System.out.println("Unable to delete files as all files modified within last 30 days");
                                           }
                                       });
