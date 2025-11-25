@@ -1,0 +1,142 @@
+What is MySQL?
+MySQL is an open-source relational database management system (RDBMS).
+Stores data in tables with rows and columns.
+Uses SQL (Structured Query Language) is used to create, manage, and query relational databases.
+
+Key Features:
+Relational database with support for foreign keys and constraints.
+ACID-compliant (Atomicity, Consistency, Isolation, Durability) — ensures reliable transactions.
+Scalable and widely used with Java applications.
+
+Database → Collection of related tables
+Table → Collection of rows (records) and columns (fields)
+Row / Record → One data entry
+Column / Field → Attribute of data
+
+Key Concepts for Java Developers:
+
+Primary Key → uniquely identifies a row.
+Foreign Key → ensures referential integrity between tables.
+
+Indexes improve query performance (like a book’s index).
+
+Constraints to enforce rules at DB level.
+PRIMARY KEY → Unique identifier
+FOREIGN KEY → Link to another table
+NOT NULL → Cannot be empty
+UNIQUE → Unique value
+CHECK → Restrict values
+DEFAULT → Default value if not provided
+
+CREATE TABLE employee (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    department VARCHAR(50),
+    salary DECIMAL(10,2) DEFAULT 10000,
+    UNIQUE (name)
+   );
+
+
+
+SQL Commands
+a) DDL (Data Definition Language) -----> Used to define or modify structure of tables/databases.
+
+Command                        Purpose	                           Example
+CREATE DATABASE	             Create a new DB	            CREATE DATABASE employee_db;
+DROP DATABASE              	 Delete DB	                    DROP DATABASE employee_db;
+CREATE TABLE               	 Create table	                CREATE TABLE employee (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), salary DECIMAL(10,2));
+ALTER TABLE	                 Modify table	                ALTER TABLE employee ADD COLUMN department VARCHAR(50);
+DROP TABLE	                 Delete table	                DROP TABLE employee;
+
+b) DML (Data Manipulation Language) -----> Used to work with data inside tables.
+
+Command	      Purpose	           Example
+INSERT	    Add records	      INSERT INTO employee (name, department, salary) VALUES ('Sanket', 'IT', 50000);
+UPDATE  	Modify records	  UPDATE employee SET salary=55000 WHERE id=1;
+DELETE	    Remove records	  DELETE FROM employee WHERE id=2;
+
+c) DQL (Data Query Language) ------> Used to read/query data.
+
+Command	                 Purpose	           Example
+SELECT	                Fetch data	     SELECT * FROM employee;
+SELECT with condition	Filter rows	     SELECT name, salary FROM employee WHERE department='IT';
+ORDER BY            	Sort results     SELECT * FROM employee ORDER BY salary DESC;
+LIMIT	                Limit rows	     SELECT * FROM employee LIMIT 5;
+
+d) DCL (Data Control Language) ------> Used for permissions & security.
+
+Command   	 Purpose                     	Example
+GRANT	   Give privileges    	GRANT SELECT, INSERT ON employee_db.* TO 'user'@'localhost';
+REVOKE	   Remove privileges	REVOKE INSERT ON employee_db.* FROM 'user'@'localhost';
+
+e) TCL (Transaction Control Language)
+
+Command      Purpose	         Example
+COMMIT  	Save changes	      COMMIT;
+ROLLBACK	Undo changes	      ROLLBACK;
+SAVEPOINT	Create checkpoint	  SAVEPOINT;
+
+| Join Type    |              Purpose                |                                 Example                                                        |
+| ------------ | ----------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `INNER JOIN` | Rows matching in both tables        | `SELECT e.name, d.dept_name FROM employee e INNER JOIN department d ON e.dept_id = d.dept_id;` |
+| `LEFT JOIN`  | All rows from left + matching right | `SELECT e.name, d.dept_name FROM employee e LEFT JOIN department d ON e.dept_id = d.dept_id;`  |
+| `RIGHT JOIN` | All rows from right + matching left | `RIGHT JOIN` similar                                                                           |
+| `FULL JOIN`  | All rows from both tables           | `FULL OUTER JOIN` (not in MySQL, use UNION)                                                    |
+
+Aggregate Functions :
+  COUNT() → count rows
+  SUM() → sum values
+  AVG() → average
+  MAX() / MIN() → highest / lowest
+
+Example:
+   SELECT department, COUNT(*) AS total_employees, AVG(salary) AS avg_salary
+   FROM employee
+   GROUP BY department;
+
+Next Goal:
+  Learn joins and subqueries → essential for backend logic.
+  Understand transactions for consistent data.
+  Start thinking about mapping tables to Java objects (later JPA/Hibernate).
+
+
+WHERE → filter rows
+ORDER BY → sort results
+LIMIT → limit rows
+COUNT(), SUM(), AVG(), MAX(), MIN()
+GROUP BY → group rows
+HAVING → filter aggregated results
+
+|                 Clause                      | When it Executes             |               Notes                     |
+| ------------------------------------------- | ---------------------------- | --------------------------------------- |
+| `WHERE`                                     | After FROM/JOIN              | Filters individual rows                 |
+| `GROUP BY`                                  | After WHERE                  | Groups rows together                    |
+| Aggregate functions (`COUNT`, `SUM`, `AVG`) | During SELECT after grouping | Applied to each group                   |
+| `HAVING`                                    | After GROUP BY               | Filters groups, not individual rows     |
+| `ORDER BY`                                  | Last                         | Sorts the final result                  |
+| `LIMIT`                                     | Last                         | Restricts number of rows returned       |
+
+  e.g.
+  SELECT department, COUNT(*) AS total_employees, AVG(salary) AS avg_salary
+  FROM employee
+  WHERE salary > 20000          -- filter rows first
+  GROUP BY department            -- group by department
+  HAVING AVG(salary) > 40000    -- filter groups after aggregation
+  ORDER BY avg_salary DESC       -- sort final result
+  LIMIT 5;                       -- take top 5 rows
+
+✅ Key Tip:
+   WHERE → filters rows before grouping
+   HAVING → filters groups after aggregation
+   ORDER BY → always last
+   LIMIT → always last
+
+
+
+
+
+
+
+
+
+
