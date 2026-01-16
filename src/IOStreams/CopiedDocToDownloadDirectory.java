@@ -43,6 +43,10 @@ public class CopiedDocToDownloadDirectory {
         Files.copy(bankStatement, targetFile);
         System.out.println("✅ File copied successfully as: " + targetFile.getFileName());
 
+         FileTime now = FileTime.fromMillis(System.currentTimeMillis());
+         Files.setLastModifiedTime(targetFile, now);
+
+
 
     }
 }
