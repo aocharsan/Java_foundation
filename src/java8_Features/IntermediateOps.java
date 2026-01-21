@@ -57,11 +57,24 @@ public class IntermediateOps {
               It is designed to execute tasks in parallel by splitting (forking) a big task into smaller
                subtasks and then combining (joining) their results.
               It uses the “Divide and Conquer” strategy for parallel processing — ideal for CPU-bound operations.
+			  Default pool for:
+               parallelStream()
+               CompletableFuture.supplyAsync()
+               Size ≈ CPU cores - 1
 
               🧩 Core Components
                 ForkJoinPool → Manages worker threads (similar to ExecutorService).
                 RecursiveTask<V> → Used when the task returns a result.
                 RecursiveAction → Used when the task does not return a result.
+
+				| Scenario                       | Thread Pool Used               |
+                | ------------------------------ | ------------------------------ |
+                | `new Thread()`                 | No pool (new thread each time) |
+                | `ExecutorService`              | Thread pool                    |
+                | `parallelStream()`             | `ForkJoinPool.commonPool()`    |
+                | `CompletableFuture.runAsync()` | `ForkJoinPool.commonPool()`    |
+                | Spring `@Async`                | `ThreadPoolTaskExecutor`       |
+
 		
 		 */
 
