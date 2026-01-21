@@ -59,7 +59,9 @@ public class MethodReferences {
 	     
 	    // String::compareToIgnoreCase --> refers to the instance method toUpperCase of any object of type String.
 	     String[] cities= {"Jalandar","Bhantinda","Chandigarh","Amritsar","Shree Nagar","Jalandar"};
-	     List<String> upperCities= Arrays.stream(cities).map(String::toUpperCase).collect(Collectors.toList());
+	     List<String> upperCities= Arrays.stream(cities).map(String::toUpperCase).collect(Collectors.toList()); // convert to mutable List
+		 Arrays.stream(cities).map(String::toUpperCase).toList();  // converted to immutable List so can't modify list again will throws UnsupportedOperationException 
+		
 	     
 	    
 	     Set<String> uniqueCities=upperCities.stream()
