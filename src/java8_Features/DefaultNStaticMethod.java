@@ -27,7 +27,7 @@ interface ParentA {
      
 	   why default method inside interface?
 	      Default method allows interface to have a method with implementation without
-	      affecting the classes that already implements this interface.
+	      breaking the classes that already implements this interface.
 	        for that just use default keyword before method signature & provides whatever
 	        implementation needed. 
 	        e.g. forEach() from Iterable Interface 
